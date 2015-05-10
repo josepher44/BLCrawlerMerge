@@ -15,6 +15,8 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 
+import net.miginfocom.swing.MigLayout;
+
 import blcrawler.model.GUIModel;
 import blcrawler.controller.GUIMainController;
 
@@ -25,6 +27,7 @@ public class GUIView {
 	private static GUIModel guiModel;
 	
 	private JFrame mainFrame;
+	private JPanel mainPanel;
 	private JLabel headerLabel;
 	private JLabel statusLabel;
 	private JPanel controlPanel;
@@ -37,9 +40,13 @@ public class GUIView {
 		this.guiModel = guiModel;
 		
 		
+		
 		mainFrame = new JFrame("Bricklink");
 	      mainFrame.setSize(800,600);
-	      mainFrame.setLayout(new GridLayout(3, 1));
+	      
+	      
+	      mainPanel = new JPanel();
+	      mainPanel.setLayout(new MigLayout());
 	      
 	      //Center on the screen
 	      Dimension dimension = Toolkit.getDefaultToolkit().getScreenSize();
@@ -62,9 +69,12 @@ public class GUIView {
 	         }        
 	      });    
 
-	      mainFrame.add(headerLabel);
-	      mainFrame.add(consoleOut);
-	      mainFrame.add(statusLabel);
+	      mainFrame.add(mainPanel);
+	      
+	      mainPanel.add(headerLabel);
+	      mainPanel.add(consoleOut);
+	      mainPanel.add(statusLabel);
+	      
 	      mainFrame.setVisible(true);
 
 	}
