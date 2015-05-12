@@ -238,6 +238,11 @@ public class GUIView {
 		return commandLine;
 	}
 	
+	public String getCLText() 
+	{
+		return commandLine.getText();
+	}
+	
  	/**
 	 * @param commandLine the commandLine to set
 	 */
