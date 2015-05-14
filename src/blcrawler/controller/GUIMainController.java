@@ -12,21 +12,21 @@ public class GUIMainController
 {
 	
 	private static GUIModel gui;
-	Action Thing;
+	Action CommandEntered;
 	
 	public GUIMainController(GUIModel gui) 
 	{
 		this.gui = gui;
 		
 
-		Thing = new AbstractAction() 
+		CommandEntered = new AbstractAction() 
 		{
 			@Override
 			public void actionPerformed(ActionEvent e) 
 			{
+				gui.getConsoleController().InterpretText(gui.getGuiView().getCLText());
 				sendInToOut(gui.getGuiView().getCLText());
 				gui.getGuiView().clearConsoleIn();
-				System.out.println("Hello World");
 			}
 		};
 	}
@@ -53,19 +53,19 @@ public class GUIMainController
 	}
 
 	/**
-	 * @return the thing
+	 * @return the command entered
 	 */
-	public Action getThing() 
+	public Action getCommandEntered() 
 	{
-		return Thing;
+		return CommandEntered;
 	}
 
 	/**
-	 * @param thing the thing to set
+	 * @param command the command to set
 	 */
-	public void setThing(Action thing) 
+	public void setCommandEntered(Action command) 
 	{
-		Thing = thing;
+		CommandEntered = command;
 	}
 
 	public void buildGUI() 

@@ -75,7 +75,7 @@ public class GUIView {
 		  commandLine.setEditable(true);
 		  commandLine.setLineWrap(true);
 		  commandLine.getInputMap(JComponent.WHEN_FOCUSED).put(keyStroke,"Thing");
-		  commandLine.getActionMap().put("Thing", this.guiMainController.getThing());
+		  commandLine.getActionMap().put("Thing", this.guiMainController.getCommandEntered());
 
 	      headerLabel = new JLabel(guiModel.getHeaderLabel(),JLabel.CENTER );
 	      statusLabel = new JLabel(guiModel.getStatusLabel(),JLabel.CENTER);        
