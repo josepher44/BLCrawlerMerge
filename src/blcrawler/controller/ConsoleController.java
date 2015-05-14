@@ -1,29 +1,45 @@
 package blcrawler.controller;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.io.PrintStream;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 
 import javax.swing.SwingUtilities;
 
-import blcrawler.model.Command;
+import Commands.Command;
+import Commands.InvalidCommand;
+import Commands.Timestamp;
 import blcrawler.model.ConsoleOutput;
 import blcrawler.model.GUIModel;
 
 public class ConsoleController 
 {
 	private List<String> validBaseCommands;
+	private HashMap<String, Runnable> commandLibrary;
 	
-	public ConsoleController() 
+	public ConsoleController() throws Exception
 	{
 		this.validBaseCommands = new ArrayList<String>();
+		this.commandLibrary = new HashMap<String, Runnable>();
+		commandLibrary.put("time", () -> {createTimestamp();});
+		commandLibrary.put("invalid", () -> {createInvalid();});
 		validBaseCommands.add("GetDate");
-		//redirectSystemStreams();
+		redirectSystemStreams();
 		
 		
 		
+	}
+	
+	public void initializeCommand() 
+	{
+		GUIModel.getGuiController().sendInToOut(GUIModel.getGuiView().getCLText());
+		InterpretText(GUIModel.getGuiView().getCLText());
+		GUIModel.getGuiView().clearConsoleIn();
 	}
 	
 	private void redirectSystemStreams() 
@@ -71,16 +87,16 @@ public class ConsoleController
 		  });
 	}
 	
-	public Command InterpretText(String textInput) 
+	public void InterpretText(String textInput) 
 	{
-		for (int i=0; i==validBaseCommands.size(); i++)
+		if (commandLibrary.containsKey(textInput))
 		{
-			if (validBaseCommands.get(i).equals(textInput))
-			{
-				return new Command(textInput.substring(0,i));	
-			}	
+			commandLibrary.get(textInput).run();
 		}
-		return new Command("invalid");	
+		else
+		{
+			commandLibrary.get("invalid").run();
+		}
 	}
 	
 	
@@ -88,6 +104,20 @@ public class ConsoleController
 	{
 		GUIModel.getGuiView().getConsoleOut().append(output.getCombined());
 	}
-
+	
+	public Method packForHash(String s) throws Exception
+	{
+		return ConsoleController.class.getMethod(s);
+	}
+	
+	public void createTimestamp() 
+	{
+		new Timestamp();
+	}
+	
+	public void createInvalid() 
+	{
+		new InvalidCommand();
+	}
 
 }

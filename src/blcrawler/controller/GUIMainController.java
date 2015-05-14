@@ -2,6 +2,7 @@ package blcrawler.controller;
 
 import java.awt.*;
 import java.awt.event.*;
+import java.lang.reflect.InvocationTargetException;
 
 import javax.swing.*;
 
@@ -24,9 +25,7 @@ public class GUIMainController
 			@Override
 			public void actionPerformed(ActionEvent e) 
 			{
-				gui.getConsoleController().InterpretText(gui.getGuiView().getCLText());
-				sendInToOut(gui.getGuiView().getCLText());
-				gui.getGuiView().clearConsoleIn();
+				GUIModel.getConsoleController().initializeCommand();
 			}
 		};
 	}

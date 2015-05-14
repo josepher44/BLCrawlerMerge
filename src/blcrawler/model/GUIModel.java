@@ -15,7 +15,7 @@ import blcrawler.view.GUIView;
 public class GUIModel 
 {
 	//private static GUIModel instance = new GUIModel("gui");
-	private GUIMainController guiController;
+	private static GUIMainController guiController;
 	private static GUIView guiView;
 	private static ConsoleController consoleController;
 	
@@ -25,7 +25,15 @@ public class GUIModel
 	public GUIModel(String name) 
 	{
 		
-		consoleController = new ConsoleController();
+		try
+		{
+			consoleController = new ConsoleController();
+		}
+		catch (Exception e)
+		{
+			System.err.println("Something has gone very wrong building some very basic stuff;"
+					+ "check ConsoleController, ctrl-f 'black magic' : " + e.getMessage());
+		}
 		
 		headerLabel = "Test for region that's having some issues displaying text, it looks"
 				+ " all funny";
@@ -60,7 +68,7 @@ public class GUIModel
 	/**
 	 * @return the guiController
 	 */
-	public GUIMainController getGuiController() 
+	public static GUIMainController getGuiController() 
 	{
 		return guiController;
 	}
