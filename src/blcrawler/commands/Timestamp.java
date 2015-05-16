@@ -8,12 +8,14 @@ import blcrawler.model.ConsoleOutput;
 
 public class Timestamp implements Command {
 
-	public Timestamp() {
-		execute();
+	public Timestamp() 
+	{
+		
 	}
 	
 	@Override
-	public void execute() {
+	public void execute() 
+	{
 		DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
 		Date date = new Date();
 
@@ -23,15 +25,52 @@ public class Timestamp implements Command {
 	}
 
 	@Override
-	public void queue() {
+	public void queue() 
+	{
 		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
-	public void stop() {
+	public void stop() 
+	{
 		// TODO Auto-generated method stub
 		
+	}
+
+	@Override
+	public boolean executeImmediately() 
+	{
+		// TODO Auto-generated method stub
+		return true;
+	}
+
+	@Override
+	public boolean executeNext() 
+	{
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public long getDelay() 
+	{
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public int getTimeout() 
+	{
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public boolean isFinished() 
+	{
+		// TODO Auto-generated method stub
+		return true;
 	}
 
 }

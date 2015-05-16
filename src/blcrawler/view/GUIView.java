@@ -19,6 +19,8 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.KeyStroke;
+import javax.swing.text.DefaultCaret;
+import javax.swing.text.JTextComponent;
 
 import net.miginfocom.swing.MigLayout;
 
@@ -64,7 +66,9 @@ public class GUIView {
 	      mainFrame.setLocation(x, y);
 	      
 		  consoleOut=new JTextArea(25, 60);
-		  consoleOut.setEditable(true);
+		  DefaultCaret caret = (DefaultCaret)consoleOut.getCaret();
+		  caret.setUpdatePolicy(DefaultCaret.ALWAYS_UPDATE);
+		  consoleOut.setEditable(false);
 		  consoleOut.setLineWrap(true);
 		  JScrollPane scrollableConsole = new JScrollPane(consoleOut);
 		  
