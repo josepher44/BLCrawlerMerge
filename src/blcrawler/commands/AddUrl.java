@@ -1,39 +1,50 @@
 package blcrawler.commands;
 
-public class AddUrl implements Command {
+import blcrawler.model.ConsoleOutput;
+import blcrawler.model.GUIModel;
+
+public class AddUrl implements Command 
+{
 	
 	private String url;
 	
-	public AddUrl(String url) {
+	public AddUrl(String url) 
+	{
 		this.url=url;
 	}
 
 	@Override
-	public void execute() {
+	public void execute() 
+	{
+		new ConsoleOutput("CommandResult", "URL input: "+ url);
+		GUIModel.getSeleniumModel().getURL(url);
+		
+	}
+
+	@Override
+	public void queue() 
+	{
 		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
-	public void queue() {
+	public void stop() 
+	{
 		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
-	public void stop() {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public boolean executeImmediately() {
+	public boolean executeImmediately() 
+	{
 		// TODO Auto-generated method stub
 		return true;
 	}
 
 	@Override
-	public boolean executeNext() {
+	public boolean executeNext() 
+	{
 		// TODO Auto-generated method stub
 		return false;
 	}
@@ -45,13 +56,15 @@ public class AddUrl implements Command {
 	}
 
 	@Override
-	public int getTimeout() {
+	public int getTimeout() 
+	{
 		// TODO Auto-generated method stub
 		return 0;
 	}
 
 	@Override
-	public boolean isFinished() {
+	public boolean isFinished() 
+	{
 		// TODO Auto-generated method stub
 		return false;
 	}

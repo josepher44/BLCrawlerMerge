@@ -11,10 +11,11 @@ public class PartBrowse implements Page
 {
 	
 	Document page;
+	String url;
 	
 	public PartBrowse() 
 	{
-		
+		this.url = "";
 	}
 
 	@Override
@@ -22,7 +23,7 @@ public class PartBrowse implements Page
 	{
 		try
 		{
-			page = Jsoup.connect("http://www.bricklink.com/browseList.asp?itemType=P&catString=46").get();
+			page = Jsoup.connect(url).get();
 			page.toString();
 		
 		} catch (IOException e) 
