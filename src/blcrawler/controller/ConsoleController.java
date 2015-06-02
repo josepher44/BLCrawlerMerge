@@ -16,6 +16,7 @@ import blcrawler.commands.Command;
 import blcrawler.commands.InvalidCommand;
 import blcrawler.commands.TimerTest;
 import blcrawler.commands.Timestamp;
+import blcrawler.commands.addpage.AddPartBrowse;
 import blcrawler.model.ConsoleOutput;
 import blcrawler.model.GUIModel;
 
@@ -33,6 +34,9 @@ public class ConsoleController
 		commandLibrary.put("timertest", () -> {createTimertest();});
 		commandLibrary.put("invalid", () -> {createInvalid();});
 		commandLibrary.put("addpage", () -> {createAddPage();});
+		commandLibrary.put("addsite", () -> {createAddPage();});
+		commandLibrary.put("addurl", () -> {createAddPage();});
+		commandLibrary.put("addpartbrowse", () -> {createPartBrowse();});
 		validBaseCommands.add("GetDate");
 		redirectSystemStreams();
 		
@@ -84,10 +88,8 @@ public class ConsoleController
 			  {
 				  if (!text.contains("\n"))
 				  {
-					  GUIModel.getGuiView().getConsoleOut().append("System: ");
+					  new ConsoleOutput("System", text);
 				  }
-		    	
-		      GUIModel.getGuiView().getConsoleOut().append(text);
 		    }
 		  });
 	}
@@ -129,12 +131,21 @@ public class ConsoleController
 	
 	public void createAddPage() 
 	{
-		GUIModel.getTaskTimer().addToQueue(new AddUrl(commandBuffer.substring(commandBuffer.indexOf(' '))));
-	}
+
+		GUIModel.getTaskTimer().addToQueue(new AddUrl(
+				commandBuffer.substring(commandBuffer.indexOf(' ')+1)));	}
 	
 	public void createTimestamp() 
 	{
 		GUIModel.getTaskTimer().addToQueue(new Timestamp());
+	}
+	
+	public void createPartBrowse() 
+	{
+		AddPartBrowse addPartBrowse = new AddPartBrowse(commandBuffer.substring(commandBuffer.indexOf(' ')+1));
+		addPartBrowse.queue();
+		GUIModel.getTaskTimer().addToQueue(addPartBrowse);
+	
 	}
 	
 	public void createTimertest() 

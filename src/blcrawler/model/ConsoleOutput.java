@@ -14,6 +14,7 @@ public class ConsoleOutput
 		this.source=source;
 		this.combined = source+": "+text+"\n";
 		GUIModel.getConsoleController().outputConsole(this);
+		GUIModel.getGuiView().getConsoleOut().setCaretPosition(GUIModel.getGuiView().getConsoleOut().getDocument().getLength());
 	}
 
 	/**

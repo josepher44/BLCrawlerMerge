@@ -18,8 +18,6 @@ public class SeleniumModel
 		System.setProperty("webdriver.chrome.driver", 
 				"c:/Users/Owner/Desktop/Multicircuit Tors/Chromedriver/chromedriver.exe");
 		driver = new ChromeDriver();
-
-		
 	}
 	
 	public void getURL(String url) 
@@ -28,6 +26,10 @@ public class SeleniumModel
 		new ConsoleOutput("Selenium: ", "Page title is: " + driver.getTitle());
 	}
 	
+	public String getHTML() 
+	{
+		return driver.getPageSource();
+	}
 	
 
 }

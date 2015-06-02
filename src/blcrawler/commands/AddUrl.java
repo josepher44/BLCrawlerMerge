@@ -16,8 +16,8 @@ public class AddUrl implements Command
 	@Override
 	public void execute() 
 	{
-		new ConsoleOutput("CommandResult", "URL input: "+ url);
-		GUIModel.getSeleniumModel().getURL(url);
+		sortUrl();
+		//GUIModel.getSeleniumModel().getURL(url);
 		
 	}
 
@@ -67,6 +67,12 @@ public class AddUrl implements Command
 	{
 		// TODO Auto-generated method stub
 		return false;
+	}
+	
+	public void sortUrl() 
+	{
+		String sortStringA = url.substring(0, 50);	//length of http://www.bricklink.com/browseList.asp?itemType=P
+		new ConsoleOutput("URL Interpretation", sortStringA);
 	}
 
 }
