@@ -28,8 +28,8 @@ public class ConsoleController
 	
 	public ConsoleController() throws Exception
 	{
-		this.validBaseCommands = new ArrayList<String>();
-		this.commandLibrary = new HashMap<String, Runnable>();
+		validBaseCommands = new ArrayList<String>();
+		commandLibrary = new HashMap<String, Runnable>();
 		commandLibrary.put("time", () -> {createTimestamp();});
 		commandLibrary.put("timertest", () -> {createTimertest();});
 		commandLibrary.put("invalid", () -> {createInvalid();});
