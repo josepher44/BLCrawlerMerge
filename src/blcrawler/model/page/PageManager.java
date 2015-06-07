@@ -50,7 +50,7 @@ public class PageManager
 			}
 			try 
 			{
-				partBrowseFileMap.put(partBrowseFiles[k].getName(), txtReader.readLine());
+				partBrowseFileMap.put(partBrowseFiles[k].getName(), txtReader.readLine().substring(5));
 			} 
 			catch (IOException e) 
 			{
@@ -65,36 +65,44 @@ public class PageManager
 	
 	public void addPartBrowse(PartBrowse partbrowse) 
 	{
-		partBrowsePages.add(partbrowse);
-		String highestValue = partBrowseFiles[partBrowseFiles.length-1].getName();
-		highestValue = highestValue.substring(highestValue.indexOf("_")+1, highestValue.indexOf("_")+6);
-		int fileNumber = Integer.parseInt(highestValue)+1;
-		String fileName = partBrowseNameGenerator(fileNumber);
-	
-	
-		try (Writer writer = new BufferedWriter(new OutputStreamWriter(
-				new FileOutputStream("C:/Users/Owner/Documents/BLCrawler/OldDatabase/Pages/PartBrowse/"+fileName), "utf-8"))) 
+		if (partBrowseFileMap.containsValue(partbrowse.getUrl()))
 		{
-			writer.write(partbrowse.getTxtRep());
+			new ConsoleOutput("PageManager", "Partbrowse page of url "+partbrowse.getUrl()+" already stored.");
 		}
-		catch (UnsupportedEncodingException e) 
+		else
 		{
-			new ConsoleOutput("System:", "You dummy. That's not a real encoding type!");
-			e.printStackTrace();
-		} 
-		catch (FileNotFoundException e) 
-		{
-			new ConsoleOutput("System:", "File not found exception thrown by new partbrowse");
-			e.printStackTrace();
-		} 
-		catch (IOException e) 
-		{
-			new ConsoleOutput("System:", "IO exception thrown by new partbrowse");
-			e.printStackTrace();
-		}
+			partBrowsePages.add(partbrowse);
+			partBrowseFiles = partBrowseDirectory.listFiles();
+			String highestValue = partBrowseFiles[partBrowseFiles.length-1].getName();
+			highestValue = highestValue.substring(highestValue.indexOf("_")+1, highestValue.indexOf("_")+6);
+			int fileNumber = Integer.parseInt(highestValue)+1;
+			String fileName = partBrowseNameGenerator(fileNumber);
 		
-		new ConsoleOutput("PageManager", "Page saved as "+fileName+".");
-	
+		
+			try (Writer writer = new BufferedWriter(new OutputStreamWriter(
+					new FileOutputStream("C:/Users/Owner/Documents/BLCrawler/OldDatabase/Pages/PartBrowse/"+fileName), "utf-8"))) 
+			{
+				writer.write(partbrowse.getTxtRep());
+			}
+			catch (UnsupportedEncodingException e) 
+			{
+				new ConsoleOutput("System:", "You dummy. That's not a real encoding type!");
+				e.printStackTrace();
+			} 
+			catch (FileNotFoundException e) 
+			{
+				new ConsoleOutput("System:", "File not found exception thrown by new partbrowse");
+				e.printStackTrace();
+			} 
+			catch (IOException e) 
+			{
+				new ConsoleOutput("System:", "IO exception thrown by new partbrowse");
+				e.printStackTrace();
+			}
+			
+			partBrowseFileMap.put(fileName, partbrowse.getUrl());	
+			new ConsoleOutput("PageManager", "Page saved as "+fileName+".");
+		}
 	
 	}
 	
