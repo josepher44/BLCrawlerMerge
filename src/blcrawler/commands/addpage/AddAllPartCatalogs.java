@@ -1,52 +1,47 @@
-package blcrawler.commands;
-
+package blcrawler.commands.addpage;
+import blcrawler.commands.Command;
 import blcrawler.model.ConsoleOutput;
 import blcrawler.model.GUIModel;
-import blcrawler.model.queue.TaskTimer;
+import blcrawler.model.page.PartBrowse;
+import blcrawler.model.page.PartBrowseIndex;
+import blcrawler.model.page.PartCatalogIndex;
 
-public class TimerTest implements Command 
+public class AddAllPartCatalogs implements Command 
 {
-	private TaskTimer timer;
-	private int timeout;
-	private int delay;
+	
+	private final int timeout;
+	private final int delay;
 	private boolean isFinished;
 	
-	public TimerTest() 
+	public AddAllPartCatalogs() 
 	{
-		timeout=100;
-		delay=100;
+		timeout=10;
+		delay=5;
 		isFinished=false;
-
 	}
 
-	
-	
 	@Override
 	public void execute() 
 	{
-
-		new ConsoleOutput("CommandResult", "Timer complete");
-		isFinished=true;
 		
-		// TODO Auto-generated method stub
+		PartCatalogIndex index = new PartCatalogIndex("http://www.bricklink.com/catalogTree.asp?itemType=P");
+		new ConsoleOutput("CommandResult", "Page of type PartCatalogIndex at url=http://www.bricklink.com/catalogTree.asp?itemType=P successfully accessed and recorded");
+		index.listPartCatalogMasterPages();
+		isFinished=true;
 		
 	}
 
 	@Override
 	public void queue() 
 	{
-		new ConsoleOutput("CommandResult", "Timer started. Standby. " + GUIModel.getTaskTimer().queue.size() + " tasks queued");
-		
+
 	}
 
 	@Override
-	public void stop() 
-	{
+	public void stop() {
 		// TODO Auto-generated method stub
 		
 	}
-
-
 
 	@Override
 	public boolean executeImmediately() 
@@ -91,7 +86,5 @@ public class TimerTest implements Command
 		// TODO Auto-generated method stub
 		return delay;
 	}
-	
-	
 
 }

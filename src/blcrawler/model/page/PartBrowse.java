@@ -1,9 +1,11 @@
 package blcrawler.model.page;
 
+import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.io.FileReader;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.io.UnsupportedEncodingException;
@@ -30,17 +32,46 @@ public class PartBrowse implements Page
 	private String txtRep;
 	private File folder;
 	
-	public PartBrowse(String input) 
+	public PartBrowse(String input) throws IllegalArgumentException
 	{
-		url=input;
-		pullTimeStamps = new ArrayList<Date>();
-		pullTimeStamps.add(new Date());
-		GUIModel.getSeleniumModel().getURL(url);
-		pageHTML = GUIModel.getSeleniumModel().getHTML();
-		pageDoc = Jsoup.parse(pageHTML, "http://bricklink.com");
-		this.txtRep = formTxtRep();
-		GUIModel.getPageManager().addPartBrowse(this);
-		memSave();
+		if (input.startsWith("http://"))
+		{
+			url=input;
+			pullTimeStamps = new ArrayList<Date>();
+			pullTimeStamps.add(new Date());
+			GUIModel.getSeleniumModel().gotoURL(url);
+			pageHTML = GUIModel.getSeleniumModel().getHTML();
+			pageDoc = Jsoup.parse(pageHTML, "http://bricklink.com");
+			this.txtRep = formTxtRep();
+			GUIModel.getPageManager().addPartBrowse(this);
+			memSave();
+		}
+		else if (input.startsWith("partbrowse_"))
+		{
+			BufferedReader in;
+			
+			try 
+			{
+				in = new BufferedReader(new FileReader("C:/Users/Owner/Documents/BLCrawler/OldDatabase/Pages/PartBrowse"+input));
+				String line;
+				while((line = in.readLine()) != null)
+				{
+				    txtRep=txtRep+line+System.lineSeparator();
+				}
+				in.close();
+			} 
+			catch (Exception e) 
+			{
+				e.printStackTrace();
+			}
+		}
+		else
+		{
+			throw new IllegalArgumentException();
+		}
+		
+		
+
 	}
 	
 	/**
@@ -63,7 +94,7 @@ public class PartBrowse implements Page
 	@Override
 	public void parseFromWeb() 
 	{
-		GUIModel.getSeleniumModel().getURL(url);
+		GUIModel.getSeleniumModel().gotoURL(url);
 		pageHTML = GUIModel.getSeleniumModel().getHTML();
 		
 		pullTimeStamps.add(new Date());
