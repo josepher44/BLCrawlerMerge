@@ -76,11 +76,12 @@ public class GUIView
         commandLine.getInputMap(JComponent.WHEN_FOCUSED).put(keyStroke, "Thing");
         commandLine.getActionMap().put("Thing", this.guiMainController.getCommandEntered());
         
-        queueBar = new JProgressBar(0,100);
-        queueBar.setPreferredSize(new Dimension(660,10));
+        queueBar = new JProgressBar(0, 100);
+        queueBar.setPreferredSize(new Dimension(660, 10));
         
-        taskBar = new JProgressBar(0,100);
-        taskBar.setPreferredSize(new Dimension(660,10));
+        taskBar = new JProgressBar(0, 100);
+        taskBar.setPreferredSize(new Dimension(660, 10));
+        setIndeterminiteOn();
         
         headerLabel = new JLabel(guiModel.getHeaderLabel(), JLabel.CENTER);
         statusLabel = new JLabel(guiModel.getStatusLabel(), JLabel.CENTER);
@@ -98,7 +99,7 @@ public class GUIView
         mainPanel.add(headerLabel, "wrap 20");
         mainPanel.add(scrollableConsole, "span 6");
         mainPanel.add(statusLabel, "wrap");
-        mainPanel.add(commandLine, "span 6 6");       
+        mainPanel.add(commandLine, "span 6 6");
         mainPanel.add(commandLine, "wrap 6");
         mainPanel.add(queueBar, "wrap");
         mainPanel.add(taskBar, "wrap");
@@ -310,6 +311,23 @@ public class GUIView
     public void clearConsoleIn()
     {
         commandLine.setText(null);
+    }
+    
+    public void setIndeterminiteOff()
+    {
+        taskBar.setIndeterminate(false);
+        queueBar.setIndeterminate(false);
+    }
+    
+    public void setIndeterminiteOn()
+    {
+        taskBar.setIndeterminate(true);
+        queueBar.setIndeterminate(true);
+    }
+    
+    public void setTaskBar(int value)
+    {
+        taskBar.setValue(value);
     }
     
 }
