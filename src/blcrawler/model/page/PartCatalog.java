@@ -125,16 +125,16 @@ public class PartCatalog implements Page
     {
         this.txtRep = txtRep;
     }
-
+    
     // TODO: Call should be used in constructor. Repeated code
     @Override
     public void parseFromWeb()
     {
-
+        
         // Use selenium to pull and record raw html
         GUIModel.getSeleniumModel().gotoURL(url);
         pageHTML = GUIModel.getSeleniumModel().getHTML();
-
+        
         // Add timestamp of the pull
         pullTimeStamps.add(new Date());
         

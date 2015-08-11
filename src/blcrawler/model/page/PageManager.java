@@ -106,9 +106,8 @@ public class PageManager
             txtRep = txtRep + urls.get(k) + System.lineSeparator();
         }
         
-        try (Writer writer = new BufferedWriter(new OutputStreamWriter(
-                new FileOutputStream(
-                        "C:/Users/Owner/Documents/BLCrawler/OldDatabase/Pages/PartIndex/partindex.txt"),
+        try (Writer writer = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(
+                "C:/Users/Owner/Documents/BLCrawler/OldDatabase/Pages/PartIndex/partindex.txt"),
                 "utf-8")))
         {
             writer.write(txtRep);
@@ -353,9 +352,8 @@ public class PageManager
                 int fileNumber = Integer.parseInt(highestValue) + 1;
                 fileName = partNameGenerator(fileNumber);
             }
-            try (Writer writer = new BufferedWriter(new OutputStreamWriter(
-                    new FileOutputStream(
-                            "C:/Users/Owner/Documents/BLCrawler/OldDatabase/Pages/Part/" + fileName),
+            try (Writer writer = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(
+                    "C:/Users/Owner/Documents/BLCrawler/OldDatabase/Pages/Part/" + fileName),
                     "utf-8")))
             {
                 writer.write(part.getTxtRep());

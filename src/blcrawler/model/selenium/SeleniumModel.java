@@ -28,7 +28,7 @@ public class SeleniumModel
     {
         System.setProperty("webdriver.gecko.driver",
                 "C:/Users/Owner/Desktop/Multicircuit Tors/Geckodriver/"
-                + "geckodriver-v0.23.0-win64/geckodriver.exe");
+                        + "geckodriver-v0.23.0-win64/geckodriver.exe");
         profile = new ProfilesIni();
         myprofile = profile.getProfile("9152");
         firefoxOptions = new FirefoxOptions();
