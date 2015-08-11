@@ -65,7 +65,7 @@ public class PageManager
             try
             {
                 in = new BufferedReader(new FileReader(
-                        "C:/Users/Joe/Documents/BLCrawl/Database/Pages/PartCatalog/partcatalog_"
+                        "C:/Users/Owner/Documents/BLCrawler/OldDatabase/Pages/PartCatalog/partcatalog_"
                                 + fiveDigits(i + 1) + ".txt"));
                 String line;
                 while ((line = in.readLine()) != null)
@@ -108,7 +108,7 @@ public class PageManager
         
         try (Writer writer = new BufferedWriter(new OutputStreamWriter(
                 new FileOutputStream(
-                        "C:/Users/Joe/Documents/BLCrawl/Database/Pages/PartIndex/partindex.txt"),
+                        "C:/Users/Owner/Documents/BLCrawler/OldDatabase/Pages/PartIndex/partindex.txt"),
                 "utf-8")))
         {
             writer.write(txtRep);
@@ -302,7 +302,7 @@ public class PageManager
         try
         {
             in = new BufferedReader(new FileReader(
-                    "C:/Users/Joe/Documents/BLCrawl/Database/Pages/PartIndex/partindex.txt"));
+                    "C:/Users/Owner/Documents/BLCrawler/OldDatabase/Pages/PartIndex/partindex.txt"));
             String line;
             
             while ((line = in.readLine()) != null)
@@ -355,7 +355,7 @@ public class PageManager
             }
             try (Writer writer = new BufferedWriter(new OutputStreamWriter(
                     new FileOutputStream(
-                            "C:/Users/Joe/Documents/BLCrawl/Database/Pages/Part/" + fileName),
+                            "C:/Users/Owner/Documents/BLCrawler/OldDatabase/Pages/Part/" + fileName),
                     "utf-8")))
             {
                 writer.write(part.getTxtRep());
@@ -574,7 +574,7 @@ public class PageManager
     public void initializePart()
     {
         partPages = new ArrayList<Part>();
-        partDirectory = new File("C:/Users/Joe/Documents/BLCrawl/Database/Pages/Part");
+        partDirectory = new File("C:/Users/Owner/Documents/BLCrawler/OldDatabase/Pages/Part");
         partFiles = partDirectory.listFiles();
         partFileMap = new HashMap<String, String>();
         BufferedReader txtReader = null;
@@ -584,7 +584,7 @@ public class PageManager
             try
             {
                 txtReader = new BufferedReader(
-                        new FileReader("C:/Users/Joe/Documents/BLCrawl/Database/Pages/Part/"
+                        new FileReader("C:/Users/Owner/Documents/BLCrawler/OldDatabase/Pages/Part/"
                                 + partNameGenerator(k + 1)));
                 partFileMap.put(partFiles[k].getName(), txtReader.readLine().substring(5));
             }
