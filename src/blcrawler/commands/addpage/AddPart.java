@@ -4,60 +4,39 @@ import java.util.Random;
 
 import blcrawler.commands.Command;
 import blcrawler.model.ConsoleOutput;
-import blcrawler.model.GUIModel;
+import blcrawler.model.ConsoleGUIModel;
 import blcrawler.model.page.Part;
 
 public class AddPart implements Command
 {
     
-    private final String url;
-    private final int timeout;
-    private final int delay;
+    private final String value;
     private boolean isFinished;
+    private int queueID;
     
-    public AddPart(String url)
+    public AddPart(String value)
     {
-        int max = 3;
-        int min = 0;
-        Random random = new Random();
-        timeout = 30 + random.nextInt(max - min + 1) + min;
-        delay = 0 + random.nextInt(max - min + 1) + min;
         isFinished = false;
-        this.url = url;
+        this.value = value;
     }
     
     @Override
     public void execute()
     {
-        if (GUIModel.getPageManager().partFileMap.containsValue(url))
-        {
-            new ConsoleOutput("PageManager", "Part page of url " + url + " already stored.");
-            
-        }
-        else
-        {
-            new Part(url);
-            new ConsoleOutput("CommandResult",
-                    "Page of type Part at url=" + url + " successfully accessed and recorded");
-        }
+        // if (ConsoleGUIModel.getPageManager().partFileMap.containsValue(url))
+        // {
+        // new ConsoleOutput("PageManager", "Part page of url "+url+" already stored.");
+        //
+        // }
+        // else
+        // {
+        // new Part(url);
+        // new ConsoleOutput("CommandResult", "Page of type Part at url=" +url+ " successfully
+        // accessed and recorded");
+        // }
+        new Part(value);
+        System.out.println("Execution of part " + value);
         isFinished = true;
-        
-    }
-    
-    @Override
-    public void queue()
-    {
-        if (GUIModel.getTaskTimer().queue.size() > 0)
-        {
-            new ConsoleOutput("CommandResult", "Addition of url " + url + " added to queue. "
-                    + GUIModel.getTaskTimer().queue.size() + " tasks queued, standby");
-        }
-    }
-    
-    @Override
-    public void stop()
-    {
-        // TODO Auto-generated method stub
         
     }
     
@@ -65,7 +44,7 @@ public class AddPart implements Command
     public boolean executeImmediately()
     {
         // TODO Auto-generated method stub
-        return false;
+        return true;
     }
     
     @Override
@@ -76,10 +55,17 @@ public class AddPart implements Command
     }
     
     @Override
+    public long getDelay()
+    {
+        // TODO Auto-generated method stub
+        return 0;
+    }
+    
+    @Override
     public int getTimeout()
     {
         // TODO Auto-generated method stub
-        return timeout;
+        return 0;
     }
     
     @Override
@@ -91,10 +77,27 @@ public class AddPart implements Command
     }
     
     @Override
-    public long getDelay()
+    public void queue()
+    {
+        if (ConsoleGUIModel.getTaskTimer().queue.size() > 0)
+        {
+            // new ConsoleOutput("CommandResult", "Addition of url " + value + " added to queue. " +
+            // ConsoleGUIModel.getTaskTimer().queue.size() + " tasks queued, standby");
+            System.out.println("Part " + value + " queued");
+        }
+    }
+    
+    @Override
+    public void stop()
     {
         // TODO Auto-generated method stub
-        return delay;
+        
+    }
+    
+    public void setQueueID(int id)
+    {
+        this.queueID = id;
+        
     }
     
 }

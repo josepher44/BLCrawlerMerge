@@ -2,7 +2,7 @@ package blcrawler.commands.addpage;
 
 import blcrawler.commands.Command;
 import blcrawler.model.ConsoleOutput;
-import blcrawler.model.GUIModel;
+import blcrawler.model.ConsoleGUIModel;
 import blcrawler.model.page.PartBrowse;
 
 public class AddPartBrowse implements Command
@@ -12,6 +12,7 @@ public class AddPartBrowse implements Command
     private final int timeout;
     private final int delay;
     private boolean isFinished;
+    private int queueID;
     
     public AddPartBrowse(String url)
     {
@@ -24,7 +25,7 @@ public class AddPartBrowse implements Command
     @Override
     public void execute()
     {
-        if (GUIModel.getPageManager().partBrowseFileMap.containsValue(url))
+        if (ConsoleGUIModel.getPageManager().partBrowseFileMap.containsValue(url))
         {
             new ConsoleOutput("PageManager", "Partbrowse page of url " + url + " already stored.");
             
@@ -36,23 +37,6 @@ public class AddPartBrowse implements Command
                     + " successfully accessed and recorded");
         }
         isFinished = true;
-        
-    }
-    
-    @Override
-    public void queue()
-    {
-        if (GUIModel.getTaskTimer().queue.size() > 0)
-        {
-            new ConsoleOutput("CommandResult", "Addition of url " + url + " added to queue. "
-                    + GUIModel.getTaskTimer().queue.size() + " tasks queued, standby");
-        }
-    }
-    
-    @Override
-    public void stop()
-    {
-        // TODO Auto-generated method stub
         
     }
     
@@ -71,6 +55,13 @@ public class AddPartBrowse implements Command
     }
     
     @Override
+    public long getDelay()
+    {
+        // TODO Auto-generated method stub
+        return delay;
+    }
+    
+    @Override
     public int getTimeout()
     {
         // TODO Auto-generated method stub
@@ -86,10 +77,26 @@ public class AddPartBrowse implements Command
     }
     
     @Override
-    public long getDelay()
+    public void queue()
+    {
+        if (ConsoleGUIModel.getTaskTimer().queue.size() > 0)
+        {
+            new ConsoleOutput("CommandResult", "Addition of url " + url + " added to queue. "
+                    + ConsoleGUIModel.getTaskTimer().queue.size() + " tasks queued, standby");
+        }
+    }
+    
+    @Override
+    public void stop()
     {
         // TODO Auto-generated method stub
-        return delay;
+        
+    }
+    
+    public void setQueueID(int id)
+    {
+        this.queueID = id;
+        
     }
     
 }

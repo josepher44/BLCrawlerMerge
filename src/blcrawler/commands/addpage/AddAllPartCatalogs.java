@@ -2,7 +2,7 @@ package blcrawler.commands.addpage;
 
 import blcrawler.commands.Command;
 import blcrawler.model.ConsoleOutput;
-import blcrawler.model.GUIModel;
+import blcrawler.model.ConsoleGUIModel;
 import blcrawler.model.page.PartBrowse;
 import blcrawler.model.page.PartBrowseIndex;
 import blcrawler.model.page.PartCatalogIndex;
@@ -13,6 +13,7 @@ public class AddAllPartCatalogs implements Command
     private final int timeout;
     private final int delay;
     private boolean isFinished;
+    private int queueID;
     
     public AddAllPartCatalogs()
     {
@@ -35,19 +36,6 @@ public class AddAllPartCatalogs implements Command
     }
     
     @Override
-    public void queue()
-    {
-        
-    }
-    
-    @Override
-    public void stop()
-    {
-        // TODO Auto-generated method stub
-        
-    }
-    
-    @Override
     public boolean executeImmediately()
     {
         // TODO Auto-generated method stub
@@ -59,6 +47,13 @@ public class AddAllPartCatalogs implements Command
     {
         // TODO Auto-generated method stub
         return false;
+    }
+    
+    @Override
+    public long getDelay()
+    {
+        // TODO Auto-generated method stub
+        return delay;
     }
     
     @Override
@@ -77,10 +72,22 @@ public class AddAllPartCatalogs implements Command
     }
     
     @Override
-    public long getDelay()
+    public void queue()
+    {
+        
+    }
+    
+    @Override
+    public void stop()
     {
         // TODO Auto-generated method stub
-        return delay;
+        
+    }
+    
+    public void setQueueID(int id)
+    {
+        this.queueID = id;
+        
     }
     
 }

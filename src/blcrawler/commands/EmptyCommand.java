@@ -3,22 +3,15 @@ package blcrawler.commands;
 public class EmptyCommand implements Command
 {
     
+    private int queueID;
+    
+    public void EmptyCommand()
+    {
+        
+    }
+    
     @Override
     public void execute()
-    {
-        // TODO Auto-generated method stub
-        
-    }
-    
-    @Override
-    public void queue()
-    {
-        // TODO Auto-generated method stub
-        
-    }
-    
-    @Override
-    public void stop()
     {
         // TODO Auto-generated method stub
         
@@ -57,6 +50,26 @@ public class EmptyCommand implements Command
     {
         // TODO Auto-generated method stub
         return false;
+    }
+    
+    @Override
+    public void queue()
+    {
+        // TODO Auto-generated method stub
+        
+    }
+    
+    @Override
+    public void stop()
+    {
+        // TODO Auto-generated method stub
+        
+    }
+    
+    public void setQueueID(int id)
+    {
+        this.queueID = id;
+        
     }
     
 }

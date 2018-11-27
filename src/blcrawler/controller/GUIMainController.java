@@ -7,37 +7,17 @@ import java.lang.reflect.InvocationTargetException;
 import javax.swing.*;
 
 import blcrawler.model.ConsoleOutput;
-import blcrawler.model.GUIModel;
+import blcrawler.model.ConsoleGUIModel;
 
 public class GUIMainController
 {
     
-    private static GUIModel gui;
-    Action CommandEntered;
-    
-    public GUIMainController(GUIModel gui)
-    {
-        this.gui = gui;
-        
-        CommandEntered = new AbstractAction()
-        {
-            @Override
-            public void actionPerformed(ActionEvent e)
-            {
-                GUIModel.getConsoleController().initializeCommand();
-            }
-        };
-    }
-    
-    protected void sendInToOut(String input)
-    {
-        new ConsoleOutput("Command", input);
-    }
+    private static ConsoleGUIModel gui;
     
     /**
      * @return the gui
      */
-    public static GUIModel getGui()
+    public static ConsoleGUIModel getGui()
     {
         return gui;
     }
@@ -46,31 +26,53 @@ public class GUIMainController
      * @param gui
      *            the gui to set
      */
-    public static void setGui(GUIModel gui)
+    public static void setGui(ConsoleGUIModel gui)
     {
         GUIMainController.gui = gui;
     }
     
+    Action CommandEntered;
+    
+    public GUIMainController(ConsoleGUIModel gui)
+    {
+        this.gui = gui;
+        
+        CommandEntered = new AbstractAction()
+        {
+            @Override
+            public void actionPerformed(ActionEvent e)
+            {
+                ConsoleGUIModel.getConsoleController().initializeCommand();
+                
+            }
+        };
+    }
+    
+    public void buildGUI()
+    {
+        
+    }
+    
     /**
-     * @return the command entered
+     * @return the thing
      */
     public Action getCommandEntered()
     {
         return CommandEntered;
     }
     
-    /**
-     * @param command
-     *            the command to set
-     */
-    public void setCommandEntered(Action command)
+    protected void sendInToOut(String input)
     {
-        CommandEntered = command;
+        new ConsoleOutput("Command", input);
     }
     
-    public void buildGUI()
+    /**
+     * @param thing
+     *            the thing to set
+     */
+    public void setCommandEntered(Action thing)
     {
-        
+        CommandEntered = thing;
     }
     
 }

@@ -9,6 +9,8 @@ import blcrawler.model.ConsoleOutput;
 public class Timestamp implements Command
 {
     
+    private int queueID;
+    
     public Timestamp()
     {
         
@@ -21,20 +23,6 @@ public class Timestamp implements Command
         final Date date = new Date();
         
         new ConsoleOutput("CommandResult", dateFormat.format(date));
-        
-    }
-    
-    @Override
-    public void queue()
-    {
-        // TODO Auto-generated method stub
-        
-    }
-    
-    @Override
-    public void stop()
-    {
-        // TODO Auto-generated method stub
         
     }
     
@@ -71,6 +59,26 @@ public class Timestamp implements Command
     {
         // TODO Auto-generated method stub
         return true;
+    }
+    
+    @Override
+    public void queue()
+    {
+        // TODO Auto-generated method stub
+        
+    }
+    
+    @Override
+    public void stop()
+    {
+        // TODO Auto-generated method stub
+        
+    }
+    
+    public void setQueueID(int id)
+    {
+        this.queueID = id;
+        
     }
     
 }

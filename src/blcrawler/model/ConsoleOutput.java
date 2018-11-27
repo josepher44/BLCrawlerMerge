@@ -12,9 +12,9 @@ public class ConsoleOutput
         this.text = text;
         this.source = source;
         combined = source + ": " + text + "\n";
-        GUIModel.getConsoleController().outputConsole(this);
-        GUIModel.getGuiView().getConsoleOut()
-                .setCaretPosition(GUIModel.getGuiView().getConsoleOut().getDocument().getLength());
+        ConsoleGUIModel.getConsoleController().outputConsole(this);
+        ConsoleGUIModel.getGuiView().getConsoleOut().setCaretPosition(
+                ConsoleGUIModel.getGuiView().getConsoleOut().getDocument().getLength());
     }
     
     /**
@@ -23,6 +23,22 @@ public class ConsoleOutput
     public String getCombined()
     {
         return combined;
+    }
+    
+    /**
+     * @return the source
+     */
+    public String getSource()
+    {
+        return source;
+    }
+    
+    /**
+     * @return the text
+     */
+    public String getText()
+    {
+        return text;
     }
     
     /**
@@ -35,11 +51,12 @@ public class ConsoleOutput
     }
     
     /**
-     * @return the text
+     * @param source
+     *            the source to set
      */
-    public String getText()
+    public void setSource(String source)
     {
-        return text;
+        this.source = source;
     }
     
     /**
@@ -51,20 +68,4 @@ public class ConsoleOutput
         this.text = text;
     }
     
-    /**
-     * @return the source
-     */
-    public String getSource()
-    {
-        return source;
-    }
-    
-    /**
-     * @param source
-     *            the source to set
-     */
-    public void setSource(String source)
-    {
-        this.source = source;
-    }
 }

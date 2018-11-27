@@ -9,6 +9,7 @@ public class QueueEntry
     public QueueEntry(Command command)
     {
         this.command = command;
+        
     }
     
     /**

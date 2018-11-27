@@ -10,7 +10,7 @@ import blcrawler.commands.InitialCommand;
 import blcrawler.commands.TimerTest;
 import blcrawler.commands.Timestamp;
 import blcrawler.model.ConsoleOutput;
-import blcrawler.model.GUIModel;
+import blcrawler.model.ConsoleGUIModel;
 
 public class TaskTimer
 {
@@ -46,15 +46,13 @@ public class TaskTimer
                     }
                     catch (InterruptedException e)
                     {
-                        System.out.println("ERR: Timer thread interrupted. Time has stopped. The "
-                                + "possibilities are endless. Go swat a bullet out of the air or"
-                                + "something. Also fix however the heck you actually got this"
-                                + "exception to call, it really shouldn't happen.");
+                        System.out.println("ERR: Timer thread interrupted");
                         e.printStackTrace();
                     }
                 }
             }
         };
+        
         thread.setDaemon(true);
         thread.start();
         startTime = System.currentTimeMillis();
@@ -89,19 +87,20 @@ public class TaskTimer
             {
                 nextStepFlag = true;
                 delay = queue.get(0).getCommand().getDelay();
+                ConsoleGUIModel.getGuiView().setTaskBar(0);
             }
             else
             {
                 delay--;
                 percentDone = 1.0
                         - ((double) delay / (double) queue.get(0).getCommand().getDelay());
-                GUIModel.getGuiView().setTaskBar((int) (percentDone * 100));
+                ConsoleGUIModel.getGuiView().setTaskBar((int) (percentDone * 100));
             }
             if (delay <= 0)
             {
                 currentCommand = queue.get(0).getCommand();
                 currentCommand.execute();
-                GUIModel.getGuiView().setTaskBar(0);
+                ConsoleGUIModel.getGuiView().setTaskBar(0);
                 queue.remove(0);
                 nextStepFlag = false;
                 totalCommands++;
@@ -109,7 +108,7 @@ public class TaskTimer
                 {
                     try
                     {
-                        GUIModel.getSeleniumModel().relaunchTor();
+                        ConsoleGUIModel.getSeleniumModel().relaunchTor();
                     }
                     catch (InterruptedException | IOException e)
                     {
@@ -117,13 +116,18 @@ public class TaskTimer
                         e.printStackTrace();
                     }
                 }
+                
             }
             
         }
-        // new ConsoleOutput("Queue","Queue executed");
         
         // Possibly a bad idea, but it's been working wonders on memory allocation
         // System.gc();
+    }
+    
+    public long get()
+    {
+        return millis;
     }
     
     public boolean isDone()
@@ -140,11 +144,6 @@ public class TaskTimer
     
     public void set(long millis)
     {
-        
     }
     
-    public long get()
-    {
-        return millis;
-    }
 }

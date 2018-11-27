@@ -22,11 +22,11 @@ import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
 import blcrawler.model.ConsoleOutput;
-import blcrawler.model.GUIModel;
+import blcrawler.model.ConsoleGUIModel;
 
 public class PartCatalogIndex implements Page
-{   
-
+{
+    
     private Document pageDoc;
     private String url;
     private List<Date> pullTimeStamps;
@@ -40,15 +40,33 @@ public class PartCatalogIndex implements Page
     {
         url = input;
         linkList = new ArrayList<String>();
-        filename = "C:/Users/Owner/Documents/BLCrawler/OldDatabase/PartCatalogIndex/partcatalogindex.txt";
+        filename = "C:/Users/Joe/Documents/BLCrawl/Database/Pages/PartCatalogIndex/partcatalogindex.txt";
         pullTimeStamps = new ArrayList<Date>();
         pullTimeStamps.add(new Date());
-        GUIModel.getSeleniumModel().gotoURL(url);
-        pageHTML = GUIModel.getSeleniumModel().getHTML();
+        ConsoleGUIModel.getSeleniumModel().gotoURL(url);
+        pageHTML = ConsoleGUIModel.getSeleniumModel().getHTML();
         pageDoc = Jsoup.parse(pageHTML, "http://www.bricklink.com");
         txtRep = formTxtRep();
-        GUIModel.getPageManager().updatePartCatalogIndex(this);
+        ConsoleGUIModel.getPageManager().updatePartCatalogIndex(this);
         memSave();
+    }
+    
+    /**
+     * Combines fields into a single string representation for saving to .txt format
+     */
+    public String formTxtRep()
+    {
+        String returnText = "URL: " + url + "\n" + "\n" + pullTimeStamps.toString();
+        returnText = returnText + "\n" + "\n" + "Raw HTML: " + "\n" + "\n" + pageHTML;
+        returnText = returnText.replaceAll("\n", System.lineSeparator());
+        return returnText;
+    }
+    
+    @Override
+    public Date getLastPullTimestamp()
+    {
+        // TODO Auto-generated method stub
+        return pullTimeStamps.get(pullTimeStamps.size() - 1);
     }
     
     /**
@@ -60,12 +78,11 @@ public class PartCatalogIndex implements Page
     }
     
     /**
-     * @param txtRep
-     *            the txtRep to set
+     * @return the url
      */
-    public void setTxtRep(String txtRep)
+    public String getUrl()
     {
-        this.txtRep = txtRep;
+        return url;
     }
     
     public void listPartCatalogMasterPages()
@@ -108,55 +125,9 @@ public class PartCatalogIndex implements Page
         
         for (int i = 0; i < linkList.size(); i++)
         {
-            GUIModel.getConsoleController().createPartCatalog(linkList.get(i));
+            ConsoleGUIModel.getConsoleController().createPartCatalog(linkList.get(i));
             new ConsoleOutput("Partcatalogindex", "Added URL " + linkList.get(i));
         }
-    }
-    
-    @Override
-    public void parseFromWeb()
-    {
-        
-        GUIModel.getSeleniumModel().gotoURL(url);
-        pageHTML = GUIModel.getSeleniumModel().getHTML();
-        
-        pullTimeStamps.add(new Date());
-        
-    }
-    
-    /**
-     * @return the url
-     */
-    public String getUrl()
-    {
-        return url;
-    }
-    
-    /**
-     * @param url
-     *            the url to set
-     */
-    public void setUrl(String url)
-    {
-        this.url = url;
-    }
-    
-    @Override
-    public Date getLastPullTimestamp()
-    {
-        // TODO Auto-generated method stub
-        return pullTimeStamps.get(pullTimeStamps.size() - 1);
-    }
-    
-    /**
-     * Combines fields into a single string representation for saving to .txt format
-     */
-    public String formTxtRep()
-    {
-        String returnText = "URL: " + url + "\n" + "\n" + pullTimeStamps.toString();
-        returnText = returnText + "\n" + "\n" + "Raw HTML: " + "\n" + "\n" + pageHTML;
-        returnText = returnText.replaceAll("\n", System.lineSeparator());
-        return returnText;
     }
     
     /**
@@ -167,6 +138,35 @@ public class PartCatalogIndex implements Page
     {
         txtRep = "";
         pageHTML = "";
+    }
+    
+    @Override
+    public void parseFromWeb()
+    {
+        
+        ConsoleGUIModel.getSeleniumModel().gotoURL(url);
+        pageHTML = ConsoleGUIModel.getSeleniumModel().getHTML();
+        
+        pullTimeStamps.add(new Date());
+        
+    }
+    
+    /**
+     * @param txtRep
+     *            the txtRep to set
+     */
+    public void setTxtRep(String txtRep)
+    {
+        this.txtRep = txtRep;
+    }
+    
+    /**
+     * @param url
+     *            the url to set
+     */
+    public void setUrl(String url)
+    {
+        this.url = url;
     }
     
 }

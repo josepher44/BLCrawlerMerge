@@ -5,6 +5,8 @@ import blcrawler.model.ConsoleOutput;
 public class InvalidCommand implements Command
 {
     
+    private int queueID;
+    
     public InvalidCommand()
     {
         execute();
@@ -15,20 +17,6 @@ public class InvalidCommand implements Command
     {
         
         new ConsoleOutput("CommandResult", "ERROR: Invalid command name or type");
-        
-    }
-    
-    @Override
-    public void queue()
-    {
-        // TODO Auto-generated method stub
-        
-    }
-    
-    @Override
-    public void stop()
-    {
-        // TODO Auto-generated method stub
         
     }
     
@@ -65,6 +53,26 @@ public class InvalidCommand implements Command
     {
         // TODO Auto-generated method stub
         return false;
+    }
+    
+    @Override
+    public void queue()
+    {
+        // TODO Auto-generated method stub
+        
+    }
+    
+    @Override
+    public void stop()
+    {
+        // TODO Auto-generated method stub
+        
+    }
+    
+    public void setQueueID(int id)
+    {
+        this.queueID = id;
+        
     }
     
 }

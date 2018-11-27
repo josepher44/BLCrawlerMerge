@@ -2,11 +2,8 @@ package blcrawler.commands;
 
 public interface Command
 {
+    
     void execute();
-    
-    void queue();
-    
-    void stop();
     
     boolean executeImmediately();
     
@@ -17,4 +14,11 @@ public interface Command
     int getTimeout();
     
     boolean isFinished();
+    
+    void queue();
+    
+    void stop();
+    
+    void setQueueID(int id);
+    
 }

@@ -20,7 +20,7 @@ import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
 import blcrawler.model.ConsoleOutput;
-import blcrawler.model.GUIModel;
+import blcrawler.model.ConsoleGUIModel;
 
 public class PartBrowse implements Page
 {
@@ -39,11 +39,11 @@ public class PartBrowse implements Page
             url = input;
             pullTimeStamps = new ArrayList<Date>();
             pullTimeStamps.add(new Date());
-            GUIModel.getSeleniumModel().gotoURL(url);
-            pageHTML = GUIModel.getSeleniumModel().getHTML();
-            pageDoc = Jsoup.parse(pageHTML, "http://bricklink.com");
-            this.txtRep = formTxtRep();
-            GUIModel.getPageManager().addPartBrowse(this);
+            ConsoleGUIModel.getSeleniumModel().gotoURL(url);
+            pageHTML = ConsoleGUIModel.getSeleniumModel().getHTML();
+            pageDoc = Jsoup.parse(pageHTML, "http://www.bricklink.com");
+            txtRep = formTxtRep();
+            ConsoleGUIModel.getPageManager().addPartBrowse(this);
             memSave();
         }
         else if (input.startsWith("partbrowse_"))
@@ -53,7 +53,7 @@ public class PartBrowse implements Page
             try
             {
                 in = new BufferedReader(new FileReader(
-                        "C:/Users/Owner/Documents/BLCrawler/OldDatabase/Pages/PartBrowse" + input));
+                        "C:/Users/Joe/Documents/BLCrawl/Database/Pages/PartBrowse" + input));
                 String line;
                 while ((line = in.readLine()) != null)
                 {
@@ -65,12 +65,28 @@ public class PartBrowse implements Page
             {
                 e.printStackTrace();
             }
+            
         }
         else
         {
             throw new IllegalArgumentException();
         }
         
+    }
+    
+    public String formTxtRep()
+    {
+        String returnText = "URL: " + url + "\n" + "\n" + pullTimeStamps.toString();
+        returnText = returnText + "\n" + "\n" + "Raw HTML: " + "\n" + "\n" + pageHTML;
+        returnText = returnText.replaceAll("\n", System.lineSeparator());
+        return returnText;
+    }
+    
+    @Override
+    public Date getLastPullTimestamp()
+    {
+        // TODO Auto-generated method stub
+        return pullTimeStamps.get(pullTimeStamps.size() - 1);
     }
     
     /**
@@ -82,52 +98,11 @@ public class PartBrowse implements Page
     }
     
     /**
-     * @param txtRep
-     *            the txtRep to set
-     */
-    public void setTxtRep(String txtRep)
-    {
-        this.txtRep = txtRep;
-    }
-    
-    @Override
-    public void parseFromWeb()
-    {
-        GUIModel.getSeleniumModel().gotoURL(url);
-        pageHTML = GUIModel.getSeleniumModel().getHTML();
-        
-        pullTimeStamps.add(new Date());
-    }
-    
-    /**
      * @return the url
      */
     public String getUrl()
     {
         return url;
-    }
-    
-    /**
-     * @param url
-     *            the url to set
-     */
-    public void setUrl(String url)
-    {
-        this.url = url;
-    }
-    
-    @Override
-    public Date getLastPullTimestamp()
-    {
-        return pullTimeStamps.get(pullTimeStamps.size() - 1);
-    }
-    
-    public String formTxtRep()
-    {
-        String returnText = "URL: " + url + "\n" + "\n" + pullTimeStamps.toString();
-        returnText = returnText + "\n" + "\n" + "Raw HTML: " + "\n" + "\n" + pageHTML;
-        returnText = returnText.replaceAll("\n", System.lineSeparator());
-        return returnText;
     }
     
     /**
@@ -139,4 +114,34 @@ public class PartBrowse implements Page
         txtRep = "";
         pageHTML = "";
     }
+    
+    @Override
+    public void parseFromWeb()
+    {
+        
+        ConsoleGUIModel.getSeleniumModel().gotoURL(url);
+        pageHTML = ConsoleGUIModel.getSeleniumModel().getHTML();
+        
+        pullTimeStamps.add(new Date());
+        
+    }
+    
+    /**
+     * @param txtRep
+     *            the txtRep to set
+     */
+    public void setTxtRep(String txtRep)
+    {
+        this.txtRep = txtRep;
+    }
+    
+    /**
+     * @param url
+     *            the url to set
+     */
+    public void setUrl(String url)
+    {
+        this.url = url;
+    }
+    
 }
