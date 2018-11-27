@@ -24,14 +24,14 @@ import blcrawler.commands.addpage.AddPartCatalog;
 import blcrawler.model.ConsoleOutput;
 import blcrawler.model.GUIModel;
 
-public class ConsoleController 
+public class ConsoleController
 {
-	private List<String> validBaseCommands;
-	private HashMap<String, Runnable> commandLibrary;
-	private String commandBuffer;
-	
-	public ConsoleController() throws Exception
-	{
+    private List<String> validBaseCommands;
+    private HashMap<String, Runnable> commandLibrary;
+    private String commandBuffer;
+    
+    public ConsoleController() throws Exception
+    {
 		validBaseCommands = new ArrayList<String>();
 		commandLibrary = new HashMap<String, Runnable>();
 		commandLibrary.put("time", () -> {createTimestamp();});
@@ -53,9 +53,7 @@ public class ConsoleController
 		validBaseCommands.add("GetDate");
 		redirectSystemStreams();
 		
-		
-		
-	}
+    }
     
     public void initializeCommand()
     {

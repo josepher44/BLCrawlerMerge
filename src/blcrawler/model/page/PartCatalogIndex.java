@@ -25,40 +25,29 @@ import blcrawler.model.ConsoleOutput;
 import blcrawler.model.GUIModel;
 
 public class PartCatalogIndex implements Page
-{
-    
-    // Initialize fields
-    private Document pageDoc;   // JSoup document containing the parsed page HTML
-    private String url;         // URL which points to the bricklink
-    private List<Date> pullTimeStamps;  // List of Java dates cointaining
-    private String pageHTML;    // The raw html of the page in string form
-    private String txtRep;      // The entire text of the page info stored in the database
-    private File folder;        // Directory the data is saved to
-    private String filename;    // Full filename of the database location
-    private ArrayList<String> linkList; // List of links to individual part browse pages
+{   
+
+    private Document pageDoc;
+    private String url;
+    private List<Date> pullTimeStamps;
+    private String pageHTML;
+    private String txtRep;
+    private File folder;
+    private String filename;
+    private ArrayList<String> linkList;
     
     public PartCatalogIndex(String input)
     {
-        // Initialize fields
         url = input;
         linkList = new ArrayList<String>();
-        filename = "C:/Users/Owner/Documents/BLCrawler/OldDatabase/Pages/PartCatalogIndex/partcatalogindex.txt";
+        filename = "C:/Users/Owner/Documents/BLCrawler/OldDatabase/PartCatalogIndex/partcatalogindex.txt";
         pullTimeStamps = new ArrayList<Date>();
         pullTimeStamps.add(new Date());
-        
-        // Scrape the data from the live web, read raw HTML
         GUIModel.getSeleniumModel().gotoURL(url);
         pageHTML = GUIModel.getSeleniumModel().getHTML();
         pageDoc = Jsoup.parse(pageHTML, "http://www.bricklink.com");
-        
-        // Compile HTML and other data into a text representation for writing to the database
         txtRep = formTxtRep();
-        
-        // Update the page manager to reference the latest version of the part browse index, and
-        // write it to the database
         GUIModel.getPageManager().updatePartCatalogIndex(this);
-        
-        // Clear unneeded fields
         memSave();
     }
     
@@ -79,14 +68,11 @@ public class PartCatalogIndex implements Page
         this.txtRep = txtRep;
     }
     
-    /**
-     * Use JSoup to find each part catalog page on the index page, and write it to the link list
-     */
     public void listPartCatalogMasterPages()
     {
         
-        // Read every line of the file in to the txtrep
         BufferedReader in;
+        
         try
         {
             in = new BufferedReader(new FileReader(filename));
@@ -102,16 +88,10 @@ public class PartCatalogIndex implements Page
             e.printStackTrace();
         }
         
-        // Update pageHTML and pagedoc as a subset of txtrep
         pageHTML = txtRep.substring(txtRep.indexOf("Raw HTML:"));
-        
-        // Create a list of all links in the HTML
         pageDoc = Jsoup.parse(pageHTML, "http://www.bricklink.com");
         Elements links = pageDoc.select("a[href]");
         String buffer = "";
-        
-        // For each hyperlink, check if it matches the format of a partcatalog.
-        // If it does, add the link to the list
         for (int i = 0; i < links.size(); i++)
         {
             
@@ -124,10 +104,8 @@ public class PartCatalogIndex implements Page
             
         }
         
-        // Shuffle the list to randomize pull order
         Collections.shuffle(linkList);
         
-        // Create a partbrowse for each link on the part browse index
         for (int i = 0; i < linkList.size(); i++)
         {
             GUIModel.getConsoleController().createPartCatalog(linkList.get(i));

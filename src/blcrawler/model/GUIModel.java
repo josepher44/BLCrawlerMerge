@@ -162,6 +162,6 @@ public class GUIModel
 	public void setStatusLabel(String statusLabel) 
 	{
 		this.statusLabel = statusLabel;
-	}
-
+    }
+    
 }
